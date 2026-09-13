@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const reportController = require('../controllers/reportController');
 
-router.get('/summary', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Reports route çalışıyor'
-  });
-});
+// Raporlama Servisleri
+router.get('/completed', reportController.getCompletedTasksReport);
+router.get('/pending', reportController.getPendingTasksReport);
+router.get('/summary', reportController.getSummaryReport);
 
 module.exports = router;
