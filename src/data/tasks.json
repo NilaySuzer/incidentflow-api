@@ -3,23 +3,12 @@
     "id": "inc-101",
     "title": "Auth Service 502 Bad Gateway Spike",
     "description": "Redis connection pool exhaustion causing session verification failures.",
-    "priority": "P0",
-    "status": "investigating",
+    "priority": "P2",
+    "status": "resolved",
     "assignee": "oncall-lead",
     "environment": "production",
     "createdAt": "2026-09-12T10:00:00.000Z",
-    "updatedAt": "2026-09-12T10:00:00.000Z"
-  },
-  {
-    "id": "inc-102",
-    "title": "Payment Webhook Latency > 2500ms",
-    "description": "Third-party payment provider webhook retries choking ingress controller.",
-    "priority": "P1",
-    "status": "in_progress",
-    "assignee": "musa",
-    "environment": "production",
-    "createdAt": "2026-09-12T11:30:00.000Z",
-    "updatedAt": "2026-09-12T12:00:00.000Z"
+    "updatedAt": "2026-10-18T17:08:24.116Z"
   },
   {
     "id": "inc-103",
@@ -31,5 +20,16 @@
     "environment": "staging",
     "createdAt": "2026-09-11T09:15:00.000Z",
     "updatedAt": "2026-09-11T14:20:00.000Z"
+  },
+  {
+    "id": "inc-1792342886878",
+    "title": "Database Read Replica Latency",
+    "description": "High replication lag detected on EU-Central replica pool.",
+    "priority": "P1",
+    "status": "investigating",
+    "assignee": "nilay",
+    "environment": "production",
+    "createdAt": "2026-10-18T17:01:26.878Z",
+    "updatedAt": "2026-10-18T17:01:26.878Z"
   }
 ]
