@@ -2,7 +2,7 @@
 
 IncidentFlow, yazılım operasyon ekiplerinin ve Site Reliability Engineering (SRE) birimlerinin üretim (production) ve test ortamlarında karşılaştığı teknik arızaları, servis kesintilerini ve altyapı darboğazlarını merkezi olarak yönetmek üzere geliştirilmiş RESTful bir backend servisidir.
 
-Sistem, geleneksel iş takip mantığını doğrudan canlı sistem olay müdahalesi (incident triage) süreçlerine uyarlar[cite: 1, 3]. Görevler öncelik seviyelerine göre sınıflandırılır, nöbetçi mühendislere atanır ve olay yaşam döngüsü boyunca izlenir.
+Sistem, geleneksel iş takip mantığını doğrudan canlı sistem olay müdahalesi (incident triage) süreçlerine uyarlar. Görevler öncelik seviyelerine göre sınıflandırılır, nöbetçi mühendislere atanır ve olay yaşam döngüsü boyunca izlenir.
 
 ---
 
@@ -24,7 +24,7 @@ Sistem, geleneksel iş takip mantığını doğrudan canlı sistem olay müdahal
 ## ⚡ Özellikler
 
 ### Temel Kapsam (Zorunlu)
-- **RESTful Mimari:** HTTP standartlarına (`GET`, `POST`, `PUT`, `DELETE`) tam uyumlu CRUD operasyonları[cite: 1, 6].
+- **RESTful Mimari:** HTTP standartlarına (`GET`, `POST`, `PUT`, `DELETE`) tam uyumlu CRUD operasyonları.
 - **Custom Request Logger:** Gelen tüm HTTP isteklerini zaman damgası, metot, URL, durum kodu ve milisaniye cinsinden yanıt süresiyle konsola basan middleware.
 - **Kalıcı Dosya Depolama:** `fs` (File System) modülü aracılığıyla `tasks.json` dosyasına güvenli okuma/yazma.
 
@@ -39,7 +39,7 @@ Sistem, geleneksel iş takip mantığını doğrudan canlı sistem olay müdahal
 
 ## 📂 Mimari ve Klasör Yapısı
 
-Proje, **Separation of Concerns (İlgilerin Ayrımı)** prensibine uygun katmanlı bir yapıda geliştirilmiştir[cite: 1, 5]:
+Proje, **Separation of Concerns (İlgilerin Ayrımı)** prensibine uygun katmanlı bir yapıda geliştirilmiştir:
 
 ```text
 incidentflow-api/
@@ -61,7 +61,8 @@ incidentflow-api/
 ├── package.json
 └── README.md
 
-🛠 Teknoloji YığınıÇalışma Zamanı (Runtime): Node.js[cite: 1, 2]Web Çatısı: Express.js[cite: 1, 2]Geliştirme Aracı: NodemonTest ve Dokümantasyon: Postman   🚀 Kurulum ve Çalıştırma1. Projeyi Klonlayın veya İndirinBashgit clone <repo-url>
+ 🚀 Kurulum ve Çalıştırma
+1. Projeyi Klonlayın veya İndirinBashgit clone <repo-url>
 cd incidentflow-api
 2. Bağımlılıkları YükleyinBashnpm install
 3. Sunucuyu BaşlatınGeliştirme modunda (canlı yeniden başlatma ile) çalıştırmak için:Bashnpm run dev
@@ -76,7 +77,7 @@ Reports API:  http://localhost:3000/reports/summary
 
 ## 📋 Veri Modeli
 
-Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar[cite: 5]:
+Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar:
 
 | Alan Adı | Tip | Zorunlu mu? | Açıklama / Kabul Edilen Değerler |
 | :--- | :--- | :--- | :--- |
@@ -84,7 +85,7 @@ Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar[cite: 5]:
 | `title` | `String` | Evet | Arıza / görev başlığı |
 | `description`| `String` | Evet | Olayın teknik özeti ve etki alanı |
 | `priority` | `String` | Evet | `P0`, `P1`, `P2`, `P3`, `high`, `medium`, `low` |
-| `status` | `String` | Sistem / Evet | `investigating`, `in_progress`, `resolved`, `completed`, `pending`[cite: 3] |
+| `status` | `String` | Sistem / Evet | `investigating`, `in_progress`, `resolved`, `completed`, `pending` |
 | `assignee` | `String` | Evet | Görevlendirilen nöbetçi mühendis kullanıcı adı |
 | `environment`| `String` | Hayır | `production`, `staging` (Varsayılan: `production`) |
 | `createdAt` | `String` | Sistem Tarafından | ISO 8601 formatında oluşturulma tarihi |
@@ -93,38 +94,12 @@ Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar[cite: 5]:
 ---
 ## 🛠 Teknoloji Yığını
 
-* **Çalışma Zamanı (Runtime):** Node.js[cite: 1, 2]
-* **Web Çatısı:** Express.js[cite: 1, 2]
+* **Çalışma Zamanı (Runtime):** Node.js
+* **Web Çatısı:** Express.js
 * **Geliştirme Aracı:** Nodemon
-* **Test ve Doğrulama:** Postman[cite: 7]
+* **Test ve Doğrulama:** Postman
 
 ---
-
-## 🚀 Kurulum ve Çalıştırma
-
-### 1. Bağımlılıkları Yükleyin
-```bash
-npm install
-2. Sunucuyu Başlatın
-Geliştirme modunda (canlı yeniden başlatma ile) çalıştırmak için:Bashnpm run dev
-Üretim modunda çalıştırmak için: Bashnpm start
-Sunucu varsayılan olarak http://localhost:3000 portunda çalışacaktır.
-
-## 📋 Veri Modeli
-
-Sistemdeki her bir kayıt şu JSON şemasına uyar[cite: 5]:
-
-| Alan Adı | Tip | Zorunlu mu? | Açıklama / Kabul Edilen Değerler |
-| :--- | :--- | :--- | :--- |
-| `id` | `String` | Sistem Tarafından | Benzersiz tanımlayıcı (örn: `inc-1729272000000`) |
-| `title` | `String` | Evet | Olay / görev başlığı[cite: 9] |
-| `description` | `String` | Evet | Hatanın teknik detayı[cite: 9] |
-| `priority` | `String` | Evet | `P0`, `P1`, `P2`, `P3`, `high`, `medium`, `low`[cite: 9] |
-| `status` | `String` | Sistem / Evet | `investigating`, `in_progress`, `resolved`, `completed`, `pending`[cite: 3] |
-| `assignee` | `String` | Evet | Sorumlu nöbetçi mühendis[cite: 9] |
-| `environment` | `String` | Hayır | `production`, `staging` (Varsayılan: `production`) |
-| `createdAt` | `String` | Sistem Tarafından | ISO 8601 oluşturulma tarihi |
-| `updatedAt` | `String` | Sistem Tarafından | ISO 8601 son güncellenme tarihi |
 
 📡 API Uç Noktaları ve Kullanım Örnekleri1. Temel CRUD İşlemleri (Zorunlu)
 
