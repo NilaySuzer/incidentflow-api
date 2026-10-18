@@ -186,7 +186,7 @@ Endpoint: DELETE /tasks/:id   Örnek: DELETE /tasks/inc-102   Yanıt (200 OK):
 }
 
 2. Gelişmiş Filtreleme ve Arama (İsteğe Bağlı)
-Metot  URL  Açıklama GET/tasks?status=resolved Çözülen vakaları listeler
+GET/tasks?status=resolved Çözülen vakaları listeler
 GET/tasks?priority=P0 Kritik P0 seviyesindeki vakaları listeler
 GET/tasks?page=1&limit=5 Sayfalama yapar
 GET/tasks?sort=createdAt Tarihe göre sıralar
