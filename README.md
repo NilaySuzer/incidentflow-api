@@ -60,7 +60,7 @@ incidentflow-api/
 ├── .gitignore
 ├── package.json
 └── README.md
-````
+```
 🛠 Teknoloji YığınıÇalışma Zamanı (Runtime): Node.js[cite: 1, 2]Web Çatısı: Express.js[cite: 1, 2]Geliştirme Aracı: NodemonTest ve Dokümantasyon: Postman   🚀 Kurulum ve Çalıştırma1. Projeyi Klonlayın veya İndirinBashgit clone <repo-url>
 cd incidentflow-api
 2. Bağımlılıkları YükleyinBashnpm install
