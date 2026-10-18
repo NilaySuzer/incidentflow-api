@@ -107,8 +107,30 @@ Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar[cite: 5]:
 npm install
 2. Sunucuyu Başlatın
 Geliştirme modunda (canlı yeniden başlatma ile) çalıştırmak için:Bashnpm run dev
-Üretim modunda çalıştırmak için:Bashnpm start
-Sunucu varsayılan olarak http://localhost:3000 portunda çalışacaktır.📋 Veri ModeliSistemdeki her bir kayıt şu JSON şemasına uyar:   Alan AdıTipZorunlu mu?Açıklama / Kabul Edilen DeğerleridStringSistem TarafındanBenzersiz tanımlayıcı (örn: inc-1729272000000)titleStringEvetOlay / görev başlığı   descriptionStringEvetHatanın teknik detayı   priorityStringEvetP0, P1, P2, P3, high, medium, low   statusStringSistem / Evetinvestigating, in_progress, resolved, completed, pending   assigneeStringEvetSorumlu nöbetçi mühendis   environmentStringHayırproduction, staging (Varsayılan: production)createdAtStringSistem TarafındanISO 8601 oluşturulma tarihiupdatedAtStringSistem TarafındanISO 8601 son güncellenme tarihi📡 API Uç Noktaları ve Kullanım Örnekleri1. Temel CRUD İşlemleri (Zorunlu)Yeni Kayıt OluşturmaEndpoint: POST /tasks   Headers: Content-Type: application/jsonBody:JSON{
+Üretim modunda çalıştırmak için: Bashnpm start
+Sunucu varsayılan olarak http://localhost:3000 portunda çalışacaktır.
+
+## 📋 Veri Modeli
+
+Sistemdeki her bir kayıt şu JSON şemasına uyar[cite: 5]:
+
+| Alan Adı | Tip | Zorunlu mu? | Açıklama / Kabul Edilen Değerler |
+| :--- | :--- | :--- | :--- |
+| `id` | `String` | Sistem Tarafından | Benzersiz tanımlayıcı (örn: `inc-1729272000000`) |
+| `title` | `String` | Evet | Olay / görev başlığı[cite: 9] |
+| `description` | `String` | Evet | Hatanın teknik detayı[cite: 9] |
+| `priority` | `String` | Evet | `P0`, `P1`, `P2`, `P3`, `high`, `medium`, `low`[cite: 9] |
+| `status` | `String` | Sistem / Evet | `investigating`, `in_progress`, `resolved`, `completed`, `pending`[cite: 3] |
+| `assignee` | `String` | Evet | Sorumlu nöbetçi mühendis[cite: 9] |
+| `environment` | `String` | Hayır | `production`, `staging` (Varsayılan: `production`) |
+| `createdAt` | `String` | Sistem Tarafından | ISO 8601 oluşturulma tarihi |
+| `updatedAt` | `String` | Sistem Tarafından | ISO 8601 son güncellenme tarihi |
+
+📡 API Uç Noktaları ve Kullanım Örnekleri1. Temel CRUD İşlemleri (Zorunlu)
+
+Yeni Kayıt Oluşturma
+Endpoint: POST /tasks   Headers: Content-Type: application/jsonBody:
+{
   "title": "Auth Service 502 Bad Gateway Spike",
   "description": "Redis connection pool exhaustion.",
   "priority": "P0",
@@ -128,7 +150,8 @@ Yanıt (201 Created):JSON{
   }
 }
 Tüm Kayıtları Listeleme
-Endpoint: GET /tasks   Yanıt (200 OK):JSON{
+Endpoint: GET /tasks   Yanıt (200 OK):
+{
   "success": true,
   "total": 3,
   "page": 1,
@@ -136,7 +159,8 @@ Endpoint: GET /tasks   Yanıt (200 OK):JSON{
   "data": [ ... ]
 }
 Tekil Kayıt Detayı
-Endpoint: GET /tasks/:id   Örnek: GET /tasks/inc-101   Yanıt (200 OK):JSON{
+Endpoint: GET /tasks/:id   Örnek: GET /tasks/inc-101   Yanıt (200 OK):
+{
   "success": true,
   "data": {
     "id": "inc-101",
@@ -145,7 +169,8 @@ Endpoint: GET /tasks/:id   Örnek: GET /tasks/inc-101   Yanıt (200 OK):JSON{
   }
 }
 Kayıt Güncelleme
-Endpoint: PUT /tasks/:id   Örnek: PUT /tasks/inc-101   Body:JSON{
+Endpoint: PUT /tasks/:id   Örnek: PUT /tasks/inc-101   Body:
+{
   "status": "resolved",
   "priority": "P2"
 }
@@ -154,18 +179,19 @@ Yanıt (200 OK):JSON{
   "message": "Görev başarıyla güncellendi."
 }
 Kayıt Silme
-Endpoint: DELETE /tasks/:id   Örnek: DELETE /tasks/inc-102   Yanıt (200 OK):JSON{
+Endpoint: DELETE /tasks/:id   Örnek: DELETE /tasks/inc-102   Yanıt (200 OK):
+{
   "success": true,
   "message": "Görev başarıyla silindi."
 }
 
 2. Gelişmiş Filtreleme ve Arama (İsteğe Bağlı)
 Metot  URL  Açıklama GET/tasks?status=resolved Çözülen vakaları listeler
-GET/tasks?priority=P0Kritik P0 seviyesindeki vakaları listeler
-GET/tasks?page=1&limit=5Sayfalama yapar
-GET/tasks?sort=createdAtTarihe göre sıralar
+GET/tasks?priority=P0 Kritik P0 seviyesindeki vakaları listeler
+GET/tasks?page=1&limit=5 Sayfalama yapar
+GET/tasks?sort=createdAt Tarihe göre sıralar
 GET/tasks/search?keyword=redis Başlık veya açıklamada metin arar
-GET/tasks/assignee/:assigneeMühendise göre listeler
+GET/tasks/assignee/:assignee Mühendise göre listeler
 
 3. Raporlama Servisleri (İsteğe Bağlı)
 Genel Özet: GET /reports/summary (Toplam vaka, durum ve öncelik sayıları)
