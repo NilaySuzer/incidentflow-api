@@ -60,7 +60,7 @@ incidentflow-api/
 ├── .gitignore
 ├── package.json
 └── README.md
-```
+
 🛠 Teknoloji YığınıÇalışma Zamanı (Runtime): Node.js[cite: 1, 2]Web Çatısı: Express.js[cite: 1, 2]Geliştirme Aracı: NodemonTest ve Dokümantasyon: Postman   🚀 Kurulum ve Çalıştırma1. Projeyi Klonlayın veya İndirinBashgit clone <repo-url>
 cd incidentflow-api
 2. Bağımlılıkları YükleyinBashnpm install
@@ -72,101 +72,113 @@ Health Check: http://localhost:3000/
 Tasks API:    http://localhost:3000/tasks
 Reports API:  http://localhost:3000/reports/summary
 ========================================
-📋 Veri ModeliSistemdeki her bir incident/görev kaydı şu JSON şemasına uyar:   Alan AdıTipZorunlu mu?Açıklama / Kabul Edilen DeğerleridStringSistem TarafındanBenzersiz tanımlayıcı (örn: inc-1729000000)titleStringEvetArıza / görev başlığı   descriptionStringEvetOlayın teknik özeti ve etki alanı   priorityStringEvetP0, P1, P2, P3, high, medium, low   statusStringSistem / Evetinvestigating, in_progress, resolved, completed, pending[cite: 3]assigneeStringEvetGörevlendirilen nöbetçi mühendis kullanıcı adı   environmentStringHayırproduction, staging (Varsayılan: production)createdAtStringSistem TarafındanISO 8601 formatında oluşturulma tarihiupdatedAtStringSistem TarafındanISO 8601 formatında son güncellenme tarihi📡 API Uç Noktaları ve Kullanım ÖrnekleriTemel CRUD İşlemleri1. Yeni Incident OluşturmaEndpoint: POST /tasks   Headers: Content-Type: application/jsonÖrnek Request Body:JSON{
+---
+
+## 📋 Veri Modeli
+
+Sistemdeki her bir incident/görev kaydı şu JSON şemasına uyar[cite: 5]:
+
+| Alan Adı | Tip | Zorunlu mu? | Açıklama / Kabul Edilen Değerler |
+| :--- | :--- | :--- | :--- |
+| `id` | `String` | Sistem Tarafından | Benzersiz tanımlayıcı (örn: `inc-1729272000000`) |
+| `title` | `String` | Evet | Arıza / görev başlığı |
+| `description`| `String` | Evet | Olayın teknik özeti ve etki alanı |
+| `priority` | `String` | Evet | `P0`, `P1`, `P2`, `P3`, `high`, `medium`, `low` |
+| `status` | `String` | Sistem / Evet | `investigating`, `in_progress`, `resolved`, `completed`, `pending`[cite: 3] |
+| `assignee` | `String` | Evet | Görevlendirilen nöbetçi mühendis kullanıcı adı |
+| `environment`| `String` | Hayır | `production`, `staging` (Varsayılan: `production`) |
+| `createdAt` | `String` | Sistem Tarafından | ISO 8601 formatında oluşturulma tarihi |
+| `updatedAt` | `String` | Sistem Tarafından | ISO 8601 formatında son güncellenme tarihi |
+
+---
+## 🛠 Teknoloji Yığını
+
+* **Çalışma Zamanı (Runtime):** Node.js[cite: 1, 2]
+* **Web Çatısı:** Express.js[cite: 1, 2]
+* **Geliştirme Aracı:** Nodemon
+* **Test ve Doğrulama:** Postman[cite: 7]
+
+---
+
+## 🚀 Kurulum ve Çalıştırma
+
+### 1. Bağımlılıkları Yükleyin
+```bash
+npm install
+2. Sunucuyu Başlatın
+Geliştirme modunda (canlı yeniden başlatma ile) çalıştırmak için:Bashnpm run dev
+Üretim modunda çalıştırmak için:Bashnpm start
+Sunucu varsayılan olarak http://localhost:3000 portunda çalışacaktır.📋 Veri ModeliSistemdeki her bir kayıt şu JSON şemasına uyar:   Alan AdıTipZorunlu mu?Açıklama / Kabul Edilen DeğerleridStringSistem TarafındanBenzersiz tanımlayıcı (örn: inc-1729272000000)titleStringEvetOlay / görev başlığı   descriptionStringEvetHatanın teknik detayı   priorityStringEvetP0, P1, P2, P3, high, medium, low   statusStringSistem / Evetinvestigating, in_progress, resolved, completed, pending   assigneeStringEvetSorumlu nöbetçi mühendis   environmentStringHayırproduction, staging (Varsayılan: production)createdAtStringSistem TarafındanISO 8601 oluşturulma tarihiupdatedAtStringSistem TarafındanISO 8601 son güncellenme tarihi📡 API Uç Noktaları ve Kullanım Örnekleri1. Temel CRUD İşlemleri (Zorunlu)Yeni Kayıt OluşturmaEndpoint: POST /tasks   Headers: Content-Type: application/jsonBody:JSON{
   "title": "Auth Service 502 Bad Gateway Spike",
-  "description": "Redis connection pool exhaustion causing session verification failures.",
+  "description": "Redis connection pool exhaustion.",
   "priority": "P0",
-  "assignee": "oncall-lead",
+  "assignee": "nilay",
   "environment": "production"
 }
-Başarılı Yanıt (201 Created):JSON{
+Yanıt (201 Created):JSON{
   "success": true,
   "message": "Görev başarıyla oluşturuldu.",
   "data": {
     "id": "inc-1729267200000",
     "title": "Auth Service 502 Bad Gateway Spike",
-    "description": "Redis connection pool exhaustion causing session verification failures.",
     "priority": "P0",
     "status": "investigating",
-    "assignee": "oncall-lead",
-    "environment": "production",
-    "createdAt": "2026-10-18T17:15:00.000Z",
-    "updatedAt": "2026-10-18T17:15:00.000Z"
+    "assignee": "nilay",
+    "createdAt": "2026-10-18T17:15:00.000Z"
   }
 }
-2. Tüm Kayıtları ListelemeEndpoint: GET /tasks   Başarılı Yanıt (200 OK):JSON{
+Tüm Kayıtları Listeleme
+Endpoint: GET /tasks   Yanıt (200 OK):JSON{
   "success": true,
   "total": 3,
   "page": 1,
   "limit": 10,
-  "data": [
-    {
-      "id": "inc-101",
-      "title": "Auth Service 502 Bad Gateway Spike",
-      "priority": "P0",
-      "status": "investigating",
-      "assignee": "oncall-lead"
-    }
-  ]
+  "data": [ ... ]
 }
-3. Tekil Kayıt DetayıEndpoint: GET /tasks/:id   Örnek İstek: GET /tasks/inc-101Başarılı Yanıt (200 OK):JSON{
+Tekil Kayıt Detayı
+Endpoint: GET /tasks/:id   Örnek: GET /tasks/inc-101   Yanıt (200 OK):JSON{
   "success": true,
   "data": {
     "id": "inc-101",
     "title": "Auth Service 502 Bad Gateway Spike",
-    "description": "Redis connection pool exhaustion causing session verification failures.",
-    "priority": "P0",
-    "status": "investigating",
-    "assignee": "oncall-lead",
-    "environment": "production"
+    "status": "investigating"
   }
 }
-4. Kayıt GüncellemeEndpoint: PUT /tasks/:id   Örnek İstek: PUT /tasks/inc-101Request Body:JSON{
+Kayıt Güncelleme
+Endpoint: PUT /tasks/:id   Örnek: PUT /tasks/inc-101   Body:JSON{
   "status": "resolved",
   "priority": "P2"
 }
-Başarılı Yanıt (200 OK):JSON{
+Yanıt (200 OK):JSON{
   "success": true,
-  "message": "Görev başarıyla güncellendi.",
-  "data": {
-    "id": "inc-101",
-    "title": "Auth Service 502 Bad Gateway Spike",
-    "status": "resolved",
-    "priority": "P2",
-    "updatedAt": "2026-10-18T17:25:00.000Z"
-  }
+  "message": "Görev başarıyla güncellendi."
 }
-5. Kayıt SilmeEndpoint: DELETE /tasks/:id   Örnek İstek: DELETE /tasks/inc-102Başarılı Yanıt (200 OK):JSON{
+Kayıt Silme
+Endpoint: DELETE /tasks/:id   Örnek: DELETE /tasks/inc-102   Yanıt (200 OK):JSON{
   "success": true,
-  "message": "Görev başarıyla silindi.",
-  "data": {
-    "id": "inc-102"
-  }
+  "message": "Görev başarıyla silindi."
 }
-Gelişmiş Arama ve FiltrelemeMetotURL ÖrneğiAçıklamaGET/tasks?status=resolvedSadece çözülen kayıtları listeler   GET/tasks?priority=P0Kritik P0 öncelikli kayıtları listeler   GET/tasks?page=1&limit=5Sayfalama uygular   GET/tasks?sort=createdAtOluşturulma tarihine göre yeniden eskiye sıralar[cite: 8]GET/tasks/search?keyword=redisBaşlık veya açıklamada metin araması yapar[cite: 8]GET/tasks/assignee/nilayBelirli bir mühendise atanan olayları listeler[cite: 8]Raporlama Servisleri1. Genel Sistem ÖzetiEndpoint: GET /reports/summary   Yanıt (200 OK):JSON{
-  "success": true,
-  "data": {
-    "totalTasks": 12,
-    "byStatus": {
-      "investigating": 4,
-      "in_progress": 3,
-      "resolved": 5,
-      "pending": 0
-    },
-    "byPriority": {
-      "P0": 2,
-      "P1": 4,
-      "P2": 5,
-      "P3": 1
-    },
-    "activeAssignees": ["oncall-lead", "nilay", "musa"],
-    "generatedAt": "2026-10-18T17:30:00.000Z"
-  }
-}
-2. Çözülen Olaylar RaporuEndpoint: GET /reports/completed   3. Bekleyen Olaylar RaporuEndpoint: GET /reports/pending[cite: 10]🛡 Middleware Yapısı1. Request Logger (src/middlewares/logger.js)Sisteme ulaşan tüm istekleri asenkron olarak izler. İstek tamamlandığında konsola şu standartta çıktı üretir:   Plaintext[2026-10-18T17:20:15.123Z] GET /tasks?status=investigating | Status: 200 | 4ms
-2. Validation Guard (src/middlewares/validator.js)POST /tasks endpoint'ine gönderilen isteklerin gövdesini doğrular. Eksik parametre veya geçersiz öncelik durumunda işlemi controller katmanına geçirmeden durdurur:   JSON{
-  "success": false,
-  "error": "ValidationError",
-  "message": "Eksik veya hatalı zorunlu alanlar: title, assignee"
-}
-🚦 Hata Yönetimi ve Durum KodlarıAPI genelinde standartlaştırılmış HTTP durum kodları kullanılır:   200 OK: İstek başarılı.   201 Created: Yeni kayıt başarıyla üretildi[cite: 6].400 Bad Request: Eksik gövde, geçersiz parametre veya doğrulama hatası[cite: 9].404 Not Found: İstenen ID'ye sahip kaynak veya endpoint bulunamadı.500 Internal Server Error: Sunucu tarafı beklenmeyen bir hata.
+
+2. Gelişmiş Filtreleme ve Arama (İsteğe Bağlı)
+Metot  URL  Açıklama GET/tasks?status=resolved Çözülen vakaları listeler
+GET/tasks?priority=P0Kritik P0 seviyesindeki vakaları listeler
+GET/tasks?page=1&limit=5Sayfalama yapar
+GET/tasks?sort=createdAtTarihe göre sıralar
+GET/tasks/search?keyword=redis Başlık veya açıklamada metin arar
+GET/tasks/assignee/:assigneeMühendise göre listeler
+
+3. Raporlama Servisleri (İsteğe Bağlı)
+Genel Özet: GET /reports/summary (Toplam vaka, durum ve öncelik sayıları)
+Çözülenler: GET /reports/completed
+Bekleyenler: GET /reports/pending
+
+🛡️ Middleware Mimarisi
+Request Logger (src/middlewares/logger.js): Gelen her HTTP isteğini zaman damgası, metot, endpoint, HTTP durum kodu ve yanıt süresi (ms) ile konsola kaydeder.
+Validator (src/middlewares/validator.js): POST /tasks gövdesindeki zorunlu alanları (title, description, priority, assignee) denetler; eksik veya geçersiz veri durumunda 400 Bad Request yanıtı döner.
+
+🚦 HTTP Durum Kodları
+200 OK: İşlem başarılı.
+201 Created: Kayıt başarıyla eklendi.
+400 Bad Request: Eksik alan veya geçersiz veri.
+404 Not Found: İstenen ID veya endpoint bulunamadı.
+500 Internal Server Error: Beklenmeyen sunucu hatası.
