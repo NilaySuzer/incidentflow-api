@@ -61,7 +61,7 @@ Sistemdeki her bir varlık aşağıdaki alan yapısına sahiptir:
 
 ## 5. REST API Uç Noktaları Özeti
 
-### Zorunlu CRUD Modülü[cite: 6]
+### Zorunlu CRUD Modülü
 
 - `POST /tasks`: Yeni görev/arıza kaydı oluşturma (`201 Created`).
 - `GET /tasks`: Tüm görevleri listeleme (`200 OK`).
@@ -69,7 +69,7 @@ Sistemdeki her bir varlık aşağıdaki alan yapısına sahiptir:
 - `PUT /tasks/:id`: Görev durum ve bilgilerini güncelleme (`200 OK`).
 - `DELETE /tasks/:id`: Görevi sistemden silme (`200 OK`).
 
-### İsteğe Bağlı İleri Seviye Servisler[cite: 8, 10]
+### İsteğe Bağlı İleri Seviye Servisler
 
 - `GET /tasks?status=&priority=&page=&limit=&sort=`: Çoklu filtreleme, sayfalama ve sıralama desteği.
 - `GET /tasks/search?keyword=`: Başlık ve açıklamalarda metin araması
